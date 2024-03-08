@@ -25,14 +25,25 @@ public class MainActivity extends AppCompatActivity {
         continueButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
+
                int selectedRadioButtonId = radioGroup.getCheckedRadioButtonId();
-               if (selectedRadioButtonId != -1) {
-                   // to do: check what the value of selectedRadioButtonId is
-                   Intent intent = new Intent(MainActivity.this, ConvertUnitsActivity.class);
-                   intent.putExtra("selectedRadioButtonId", selectedRadioButtonId);
-                   startActivity(intent);
-               } else {
+               Intent intent;
+
+               if (selectedRadioButtonId == -1) {
                    Toast.makeText(MainActivity.this, "Please select a unit", Toast.LENGTH_SHORT).show();
+                   intent = null;
+               } else if (selectedRadioButtonId == R.id.lengthBtn) {
+                    intent = new Intent(MainActivity.this, LengthActivity.class);
+               } else if (selectedRadioButtonId == R.id.temperatureBtn) {
+                   intent = new Intent(MainActivity.this, TemperatureActivity.class);
+               } else if (selectedRadioButtonId == R.id.weightBtn) {
+                   intent = new Intent(MainActivity.this, WeightActivity.class);
+               } else {
+                   intent = null;
+               }
+
+               if (intent != null) {
+                    startActivity(intent);
                }
            }
         });

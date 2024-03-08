@@ -21,7 +21,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.unitconverter.ConvertUnitsActivity" />
+        <activity
+            android:name="LengthActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name="TemperatureActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name="WeightActivity"
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>
