@@ -29,27 +29,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
 
-    <Switch
-        android:id="@+id/unitToggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="349dp"
-        android:checked="false"
-        android:minWidth="48dp"
-        android:minHeight="48dp"
-        android:textOff="Metric"
-        android:textOn="Imperial"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.0"
-        app:showText="true"
-        tools:ignore="HardcodedText,UseSwitchCompatOrMaterialXml" />
-
     <Button
         android:id="@+id/convertBtn"
         android:layout_width="wrap_content"
@@ -117,4 +96,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintVertical_bias="0.384" />
+
+    <TextView
+        android:id="@+id/convertedValue"
+        android:layout_width="225dp"
+        android:layout_height="56dp"
+        android:text="Value"
+        android:textAlignment="center"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/convertBtn"
+        app:layout_constraintVertical_bias="0.214" />
 </androidx.constraintlayout.widget.ConstraintLayout>
