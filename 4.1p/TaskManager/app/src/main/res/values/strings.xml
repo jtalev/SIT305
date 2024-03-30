@@ -3,4 +3,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="add_task">Add Task</string>
+    <string name="tasks">Tasks</string>
+    <string name="title_tasks">Tasks</string>
+    <string name="title_add_task">Add Task</string>
 </resources>
