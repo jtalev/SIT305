@@ -1,6 +1,8 @@
 package com.example.taskmanager.ui.addTask;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,40 +12,64 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.loader.content.AsyncTaskLoader;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.taskmanager.databinding.FragmentAddTaskBinding;
-
-import org.w3c.dom.Text;
+import com.example.taskmanager.persistence.AppDatabase;
+import com.example.taskmanager.persistence.Task;
+import com.example.taskmanager.persistence.TaskDao;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class AddTaskFragment extends Fragment{
 
     private FragmentAddTaskBinding binding;
     private TextView dueDateTextView;
-    private Button selectDateButton;
+    TextInputEditText titleTextInput;
+    TextInputEditText descriptionTextInput;
+    Button selectDateButton;
+    Button saveButton;
+    private AddTaskViewModel addTaskViewModel;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        addTaskViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication())).get(AddTaskViewModel.class);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        AddTaskViewModel addTaskViewModel =
-                new ViewModelProvider(this).get(AddTaskViewModel.class);
-
         binding = FragmentAddTaskBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        selectDateButton = binding.selectDateButton;
+        titleTextInput = binding.titleTextInput;
+        descriptionTextInput = binding.descriptionTextInput;
         dueDateTextView = binding.dueDateTextView;
+        selectDateButton = binding.selectDateButton;
+        saveButton = binding.saveButton;
 
         selectDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog();
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveTask();
             }
         });
 
@@ -72,6 +98,14 @@ public class AddTaskFragment extends Fragment{
                 }, year, month, day);
 
         datePickerDialog.show();
+    }
+
+    private void saveTask() {
+        String title = titleTextInput.getText().toString();
+        String description = descriptionTextInput.getText().toString();
+        String dueDate = dueDateTextView.getText().toString();
+
+        addTaskViewModel.insertTask(title, description, dueDate, requireContext());
     }
 
     @Override

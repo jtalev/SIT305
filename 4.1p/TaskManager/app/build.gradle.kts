@@ -55,4 +55,8 @@ dependencies {
     ksp("androidx.room:room-compiler:$roomVersion")
     // To use Kotlin Symbol Processing (KSP)
     ksp("androidx.room:room-compiler:$roomVersion")
+
+    implementation("com.google.guava:guava:33.1.0-android")
+    implementation("androidx.room:room-guava:2.6.1")
+
 }

@@ -4,11 +4,10 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.Date;
-
-@Entity
+@Entity(tableName = "Task")
 public class Task {
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "task_id")
     public int id;
 
     @ColumnInfo(name = "task")
@@ -18,8 +17,20 @@ public class Task {
     public String description;
 
     @ColumnInfo(name = "due_date")
-    public Date dueDate;
+    public String dueDate;
 
     @ColumnInfo(name = "is_complete")
-    public boolean isComplete;
+    public boolean isComplete = false;
+
+    public Task(String task, String description, String dueDate) {
+        this.task = task;
+        this.description = description;
+        this.dueDate = dueDate;
+    }
+
+    public Task() {}
+
+    public int getId() {return id;}
+    public String getTask() {return task;}
+    public String getDescription() {return description;}
 }
