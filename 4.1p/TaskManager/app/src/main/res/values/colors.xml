@@ -8,4 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="text_input_colour">#4A709C</color>
+    <color name="task_card_background">#254A709C</color>
 </resources>

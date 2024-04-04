@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -105,7 +106,29 @@ public class AddTaskFragment extends Fragment{
         String description = descriptionTextInput.getText().toString();
         String dueDate = dueDateTextView.getText().toString();
 
+        int duration = Toast.LENGTH_SHORT;
+
+        if (title.isEmpty()) {
+            Toast toast = createToastMessage("Enter task title", duration);
+            toast.show();
+            return;
+        }
+        if (description.isEmpty()) {
+            Toast toast = createToastMessage("Enter task description", duration);
+            toast.show();
+            return;
+        }
+        if(dueDate.equals("Due Date")) {
+            Toast toast = createToastMessage("Enter task due date", duration);
+            toast.show();
+            return;
+        }
+
         addTaskViewModel.insertTask(title, description, dueDate, requireContext());
+    }
+
+    private Toast createToastMessage(CharSequence message, int duration) {
+        return Toast.makeText(this.getContext(), message, duration);
     }
 
     @Override

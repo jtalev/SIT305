@@ -26,7 +26,7 @@ public interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public ListenableFuture<Void> insertTask(Task task);
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     public ListenableFuture<Integer> updateTask(Task task);
 
     @Delete
