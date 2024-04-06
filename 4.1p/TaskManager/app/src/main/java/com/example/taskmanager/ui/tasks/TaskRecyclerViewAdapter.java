@@ -13,7 +13,9 @@ import com.example.taskmanager.R;
 import com.example.taskmanager.persistence.Task;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
 
@@ -43,7 +45,10 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.taskTextView.setText(taskList.get(position).task);
-        holder.dateTextView.setText(taskList.get(position).dueDate);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String formattedDate = sdf.format(taskList.get(position).dueDate);
+        holder.dateTextView.setText(formattedDate);
     }
 
     @Override

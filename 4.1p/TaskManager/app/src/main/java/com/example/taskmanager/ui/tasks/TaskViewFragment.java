@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +29,7 @@ public class TaskViewFragment extends Fragment {
     private TaskRecyclerViewAdapter taskRecyclerViewAdapter;
     private ListenableFuture<List<Task>> taskList;
     private TaskViewModel taskViewModel;
+    private Button deleteAllButton;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +51,15 @@ public class TaskViewFragment extends Fragment {
         taskRecyclerViewAdapter = new TaskRecyclerViewAdapter(taskList, requireContext());
         taskRecyclerView.setAdapter(taskRecyclerViewAdapter);
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        deleteAllButton = binding.deleteAllButton;
+
+        deleteAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteAllTasks();
+            }
+        });
+
         return root;
     }
 
@@ -58,6 +69,10 @@ public class TaskViewFragment extends Fragment {
         } else {
             Log.d("TaskList", taskList.toString());
         }
+    }
+
+    public void deleteAllTasks() {
+        taskViewModel.deleteAllTasks(requireContext());
     }
 
     @Override

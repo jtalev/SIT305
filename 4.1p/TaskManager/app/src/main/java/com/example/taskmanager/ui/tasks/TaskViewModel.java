@@ -31,4 +31,8 @@ public class TaskViewModel extends ViewModel {
     public ListenableFuture<List<Task>> getAllOrderedByDueDate(Context context) {
         return getAppDb(context).getTaskDao().getAllOrderedByDueDate();
     }
+
+    public ListenableFuture<Integer> deleteAllTasks(Context context) {
+        return getAppDb(context).getTaskDao().deleteAllTasks();
+    }
 }

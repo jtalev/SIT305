@@ -10,6 +10,8 @@ import com.example.taskmanager.persistence.AppDatabase;
 import com.example.taskmanager.persistence.Task;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.util.Date;
+
 
 public class AddTaskViewModel extends ViewModel {
 
@@ -26,7 +28,7 @@ public class AddTaskViewModel extends ViewModel {
         return appDb;
     }
 
-    public ListenableFuture<Void> insertTask(String title, String description, String dueDate, Context context) {
+    public ListenableFuture<Void> insertTask(String title, String description, Date dueDate, Context context) {
         final Task task = new Task(title, description, dueDate);
         return getAppDb(context).getTaskDao().insertTask(task);
     }

@@ -27,8 +27,10 @@ import com.example.taskmanager.persistence.Task;
 import com.example.taskmanager.persistence.TaskDao;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class AddTaskFragment extends Fragment{
@@ -104,22 +106,23 @@ public class AddTaskFragment extends Fragment{
     private void saveTask() {
         String title = titleTextInput.getText().toString();
         String description = descriptionTextInput.getText().toString();
-        String dueDate = dueDateTextView.getText().toString();
+        String dueDateStr = dueDateTextView.getText().toString();
 
         int duration = Toast.LENGTH_SHORT;
 
-        if (title.isEmpty()) {
-            Toast toast = createToastMessage("Enter task title", duration);
+        if (title.isEmpty() || description.isEmpty() || dueDateStr.equals("Due Date")) {
+            Toast toast = createToastMessage("Please fill all the fields", duration);
             toast.show();
             return;
         }
-        if (description.isEmpty()) {
-            Toast toast = createToastMessage("Enter task description", duration);
-            toast.show();
-            return;
-        }
-        if(dueDate.equals("Due Date")) {
-            Toast toast = createToastMessage("Enter task due date", duration);
+
+        // Parse dueDateStr to Date
+        Date dueDate;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            dueDate = sdf.parse(dueDateStr);
+        } catch (ParseException e) {
+            Toast toast = createToastMessage("Invalid date format", duration);
             toast.show();
             return;
         }

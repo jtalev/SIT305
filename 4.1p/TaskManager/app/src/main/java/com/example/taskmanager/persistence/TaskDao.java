@@ -17,7 +17,7 @@ public interface TaskDao {
     @Query("SELECT * FROM task")
     public ListenableFuture<List<Task>> getAll();
 
-    @Query("SELECT * FROM task ORDER BY due_date")
+    @Query("SELECT * FROM task ORDER BY due_date ASC")
     public ListenableFuture<List<Task>> getAllOrderedByDueDate();
 
     @Query("SELECT * FROM task Where task_id = :taskId")
