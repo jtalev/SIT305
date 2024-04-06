@@ -1,6 +1,9 @@
 package com.example.taskmanager.persistence;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -19,6 +22,9 @@ public interface TaskDao {
 
     @Query("SELECT * FROM task ORDER BY due_date ASC")
     public ListenableFuture<List<Task>> getAllOrderedByDueDate();
+
+    @Query("SELECT * FROM task ORDER BY due_date ASC")
+    public LiveData<List<Task>> getTasksOrderedByDateLiveData();
 
     @Query("SELECT * FROM task Where task_id = :taskId")
     public LiveData<Task> getTaskById(int taskId);

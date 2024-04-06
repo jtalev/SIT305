@@ -1,12 +1,16 @@
 package com.example.taskmanager.ui.editTask;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.example.taskmanager.R;
@@ -15,6 +19,7 @@ import com.example.taskmanager.ui.tasks.TaskViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -25,6 +30,7 @@ public class EditTaskActivity extends AppCompatActivity {
     private TextInputEditText descriptionTextInput;
     private TextView dueDateTextView;
     private EditTaskViewModel editTaskViewModel;
+    private Button selectDateButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,7 @@ public class EditTaskActivity extends AppCompatActivity {
         descriptionTextInput = findViewById(R.id.updateDescriptionTextInput);
         dueDateTextView = findViewById(R.id.updateDateTextView);
         updateButton = findViewById(R.id.updateButton);
+        selectDateButton = findViewById(R.id.updateDateButton);
 
         Bundle extras = getIntent().getExtras();
 
@@ -53,6 +60,13 @@ public class EditTaskActivity extends AppCompatActivity {
             String formattedDueDate = sdf.format(dueDate);
             dueDateTextView.setText(formattedDueDate);
         }
+
+        selectDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
+            }
+        });
 
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,5 +89,29 @@ public class EditTaskActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void showDatePickerDialog() {
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, month);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                        String selectedDate = sdf.format(calendar.getTime());
+
+                        dueDateTextView.setText(selectedDate);
+                    }
+                }, year, month, day);
+
+        datePickerDialog.show();
     }
 }
