@@ -48,7 +48,7 @@ public class TaskViewFragment extends Fragment {
         View root = binding.getRoot();
 
         taskRecyclerView = binding.taskRecyclerView;
-        taskRecyclerViewAdapter = new TaskRecyclerViewAdapter(taskList, requireContext());
+        taskRecyclerViewAdapter = new TaskRecyclerViewAdapter(taskList, requireContext(), this);
         taskRecyclerView.setAdapter(taskRecyclerViewAdapter);
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         deleteAllButton = binding.deleteAllButton;

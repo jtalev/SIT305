@@ -25,6 +25,13 @@ public class Task {
     @ColumnInfo(name = "is_complete")
     public boolean isComplete = false;
 
+    public Task(String task, String description, Date dueDate, int id) {
+        this.task = task;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.id = id;
+    }
+
     public Task(String task, String description, Date dueDate) {
         this.task = task;
         this.description = description;

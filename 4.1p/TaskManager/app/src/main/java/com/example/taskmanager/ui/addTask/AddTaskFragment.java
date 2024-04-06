@@ -128,6 +128,11 @@ public class AddTaskFragment extends Fragment{
         }
 
         addTaskViewModel.insertTask(title, description, dueDate, requireContext());
+        titleTextInput.setText("");
+        descriptionTextInput.setText("");
+        dueDateTextView.setText("Due Date");
+        Toast toast = createToastMessage("Task saved", duration);
+        toast.show();
     }
 
     private Toast createToastMessage(CharSequence message, int duration) {

@@ -1,8 +1,7 @@
-package com.example.taskmanager.ui.tasks;
+package com.example.taskmanager.ui.editTask;
 
 import android.content.Context;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.room.Room;
 
@@ -10,13 +9,10 @@ import com.example.taskmanager.persistence.AppDatabase;
 import com.example.taskmanager.persistence.Task;
 import com.google.common.util.concurrent.ListenableFuture;
 
-import java.util.List;
+public class EditTaskViewModel extends ViewModel {
+    AppDatabase appDb;
 
-public class TaskViewModel extends ViewModel {
-
-    private AppDatabase appDb;
-
-    public TaskViewModel() {
+    public EditTaskViewModel() {
 
     }
 
@@ -26,14 +22,6 @@ public class TaskViewModel extends ViewModel {
         }
 
         return appDb;
-    }
-
-    public ListenableFuture<List<Task>> getAllOrderedByDueDate(Context context) {
-        return getAppDb(context).getTaskDao().getAllOrderedByDueDate();
-    }
-
-    public ListenableFuture<Integer> deleteAllTasks(Context context) {
-        return getAppDb(context).getTaskDao().deleteAllTasks();
     }
 
     public ListenableFuture<Integer> updateTask(Task task, Context context) {
