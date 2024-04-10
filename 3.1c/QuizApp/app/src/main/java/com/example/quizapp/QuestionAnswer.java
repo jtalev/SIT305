@@ -2,6 +2,12 @@ package com.example.quizapp;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import kotlin.collections.ArrayDeque;
+
 public class QuestionAnswer {
 
     @SerializedName("question")
@@ -31,5 +37,13 @@ public class QuestionAnswer {
 
     public String[] getIncorrectAnswer() {
         return incorrectAnswers;
+    }
+
+    public String[] getAllAnswers() {
+        List<String> answers = new ArrayList<>();
+        Collections.addAll(answers, incorrectAnswers);
+        answers.add(correctAnswer);
+        Collections.shuffle(answers);
+        return answers.toArray(new String[0]);
     }
 }

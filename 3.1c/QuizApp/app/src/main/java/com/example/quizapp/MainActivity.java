@@ -2,6 +2,7 @@ package com.example.quizapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -10,59 +11,41 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import android.util.Base64;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 public class MainActivity extends AppCompatActivity {
 
-    private QuizApiService quizService;
+    TextInputEditText nameInput;
+    Button startButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        quizService = RetrofitClient.getClient().create(QuizApiService.class);
+        nameInput = findViewById(R.id.nameTextInput);
+        startButton = findViewById(R.id.startButton);
 
-        fetchQuizData();
-    }
-
-    private void fetchQuizData() {
-
-        Call<QuizApiResponse> call = quizService.getQuiz(5, 9, "medium", "multiple", "base64");
-        call.enqueue(new Callback<QuizApiResponse>() {
+        startButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call<QuizApiResponse> call, Response<QuizApiResponse> response) {
-                if (response.isSuccessful()) {
-                    QuizApiResponse quizResponse = response.body();
-                    if (quizResponse != null) {
-                        QuestionAnswer[] decodedResults = decodeQuizResponse(quizResponse);
-                    }
-                } else {
-                    Log.e("MainActivity", "Failed to fetch quiz data: " + response.message());
+            public void onClick(View v) {
+                String name = nameInput.getText().toString().trim();
+                if (name.isEmpty()) {
+                    int duration = Toast.LENGTH_SHORT;
+                    String text = "Enter your name";
+                    Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+                    toast.show();
+                    return;
                 }
-            }
 
-            @Override
-            public void onFailure(Call<QuizApiResponse> call, Throwable throwable) {
-                Log.e("MainActivity", "Failed to fetch quiz data: " + throwable.getMessage());
+                Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
+                intent.putExtra("NAME", name);
+                startActivity(intent);
             }
         });
-    }
-
-    private QuestionAnswer[] decodeQuizResponse(QuizApiResponse quizResponse) {
-        QuestionAnswer[] results = quizResponse.getResults();
-        for (QuestionAnswer questionAnswer : results) {
-            questionAnswer.setQuestion(decodeBase64(questionAnswer.getQuestion()));
-            questionAnswer.setCorrectAnswer(decodeBase64(questionAnswer.getCorrectAnswer()));
-            String[] incorrectAnswers = questionAnswer.getIncorrectAnswer();
-            for (int i = 0; i < incorrectAnswers.length; i++) {
-                incorrectAnswers[i] = decodeBase64(incorrectAnswers[i]);
-            }
-        }
-        return results;
-    }
-
-    private String decodeBase64(String encodedString) {
-        byte[] decodedByte = Base64.decode(encodedString, Base64.DEFAULT);
-        return new String(decodedByte);
     }
 }

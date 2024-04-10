@@ -6,4 +6,12 @@
     </style>
 
     <style name="Theme.QuizApp" parent="Base.Theme.QuizApp" />
+
+    <style name="answerButton" parent="Widget.Material3.Button">
+        <item name="android:background">@drawable/button_border</item>
+    </style>
+
+    <style name="answerButtonSelected" parent="Widget.Material3.Button">
+        <item name="android:background">@drawable/button_border_selected</item>
+    </style>
 </resources>

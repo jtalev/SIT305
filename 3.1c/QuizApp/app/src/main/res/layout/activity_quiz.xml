@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".QuizActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/welcomeTextView"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/welcome_your_name"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarLayout"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeTextView"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/questionCounter"
+            android:text="@string/_1_5"
+            android:textSize="16sp"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:max="5"
+            android:progress="1"
+            android:layout_marginStart="5dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/questionAnswerLayout"
+        app:layout_constraintTop_toBottomOf="@id/progressBarLayout"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/questionTextView"
+            android:text="@string/loading"
+            android:textSize="16sp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/answerA"
+            android:text="@string/loading"
+            android:textColor="@color/black"
+            android:background="@drawable/button_border"
+            android:layout_marginTop="10dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/answerB"
+            android:text="@string/loading"
+            android:textColor="@color/black"
+            android:background="@drawable/button_border"
+            android:layout_marginTop="10dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/answerC"
+            android:text="@string/loading"
+            android:textColor="@color/black"
+            android:background="@drawable/button_border"
+            android:layout_marginTop="10dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/answerD"
+            android:text="@string/loading"
+            android:textColor="@color/black"
+            android:background="@drawable/button_border"
+            android:layout_marginTop="10dp"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/submitButton"
+        app:layout_constraintTop_toBottomOf="@id/questionAnswerLayout"
+        android:layout_marginTop="30dp"
+        android:text="@string/submit"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
