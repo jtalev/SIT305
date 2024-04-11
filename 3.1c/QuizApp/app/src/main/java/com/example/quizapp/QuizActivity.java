@@ -157,6 +157,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
                 QuizActivity.this.finish();
             } else {
                 loadNewQuestion();
+                selectedAnswerButton = null;
                 progressBar.setProgress(questionCounter + 1);
                 questionCounterTextView.setText((questionCounter + 1) + "/5");
                 clickedButton.setText("Submit");
