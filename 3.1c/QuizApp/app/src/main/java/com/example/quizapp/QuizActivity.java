@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
@@ -135,7 +136,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
                     toast.show();
                     return;
                 }
-                clickedButton.setText("Next question");
+
                 if (selectedAnswer.equals(decodedResults[questionCounter].getCorrectAnswer())){
                     selectedAnswerButton.setBackground(getDrawable(R.drawable.button_border_correct));
                     correctAnswerCounter++;
@@ -143,6 +144,17 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
                     selectedAnswerButton.setBackground(getDrawable(R.drawable.button_border_incorrect));
                 }
                 questionCounter++;
+                if(questionCounter == decodedResults.length){
+                    clickedButton.setText("Finish quiz");
+                    return;
+                }
+                clickedButton.setText("Next question");
+            } else if (buttonText.equals("Finish quiz")) {
+                Intent intent = new Intent(getApplicationContext(), FinishQuizActivity.class);
+                intent.putExtra("CORRECT_ANSWERS", correctAnswerCounter);
+                intent.putExtra("NAME", name);
+                startActivity(intent);
+                QuizActivity.this.finish();
             } else {
                 loadNewQuestion();
                 progressBar.setProgress(questionCounter + 1);
