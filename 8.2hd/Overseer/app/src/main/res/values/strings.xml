@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Overseer</string>
+    <string name="overseer">Overseer</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="log_in">Log in</string>
+    <string name="new_user_sign_up">New user? Sign up</string>
+    <string name="email">email</string>
+    <string name="sign_up">Sign up</string>
+    <string name="confirm_password">confirm password</string>
+</resources>

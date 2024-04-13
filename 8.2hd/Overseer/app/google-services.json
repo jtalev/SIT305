@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "525490463539",
+    "project_id": "overseer-50d4b",
+    "storage_bucket": "overseer-50d4b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525490463539:android:2e88f34cc24565d3955446",
+        "android_client_info": {
+          "package_name": "com.example.overseer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRsxarrHmZKl1PNyh_-wmjuLC_8J1dm5I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
