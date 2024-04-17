@@ -2,12 +2,14 @@ package com.example.newsapp;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class NewsApiResponse {
 
     @SerializedName("articles")
-    private ArticleModel[] articles;
+    private List<ArticleModel> articles;
 
-    public ArticleModel[] getArticles() {
+    public List<ArticleModel> getArticles() {
         return articles;
     }
 }
