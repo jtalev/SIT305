@@ -1,17 +1,24 @@
 package com.example.newsapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.LinearLayout;
+import android.view.View;
 import android.widget.Toast;
 
+import com.example.newsapp.data.ArticleModel;
+import com.example.newsapp.data.NewsApiResponse;
+import com.example.newsapp.data.NewsApiService;
+import com.example.newsapp.data.RetrofitClient;
+import com.example.newsapp.fragments.NewsFragment;
 import com.example.newsapp.standardnews.StandardNewsRecyclerAdapter;
 import com.example.newsapp.topnews.TopStoriesRecyclerAdapter;
+import com.example.newsapp.utility.NewsItemClickListener;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView newsRecyclerView;
     private TopStoriesRecyclerAdapter topStoriesAdapter;
     private StandardNewsRecyclerAdapter standardNewsAdapter;
+    private FragmentContainerView fragmentContainerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +43,10 @@ public class MainActivity extends AppCompatActivity {
         topStoriesRecyclerView.setLayoutManager(topStoriesLayoutManager);
 
         newsRecyclerView = findViewById(R.id.newsRecyclerView);
-        GridLayoutManager standardNewsLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
+        LinearLayoutManager standardNewsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         newsRecyclerView.setLayoutManager(standardNewsLayoutManager);
+
+        fragmentContainerView = findViewById(R.id.fragmentContainerView);
 
         newsService = RetrofitClient.getClient().create(NewsApiService.class);
 
@@ -50,7 +60,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<NewsApiResponse> call, Response<NewsApiResponse> response) {
                 if (response.isSuccessful()) {
-                    topStoriesAdapter = new TopStoriesRecyclerAdapter(response.body());
+                    topStoriesAdapter = new TopStoriesRecyclerAdapter(response.body(), new NewsItemClickListener() {
+                        @Override
+                        public void onNewsItemClick(ArticleModel article) {
+                            launchNewsFragment(article);
+                        }
+                    });
                     topStoriesRecyclerView.setAdapter(topStoriesAdapter);
 
                 } else {
@@ -71,7 +86,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<NewsApiResponse> call, Response<NewsApiResponse> response) {
                 if (response.isSuccessful()) {
-                    standardNewsAdapter = new StandardNewsRecyclerAdapter(response.body());
+                    standardNewsAdapter = new StandardNewsRecyclerAdapter(response.body(), new NewsItemClickListener() {
+                        @Override
+                        public void onNewsItemClick(ArticleModel article) {
+                            launchNewsFragment(article);
+                        }
+                    });
                     newsRecyclerView.setAdapter(standardNewsAdapter);
 
                 } else {
@@ -86,5 +106,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Failed to fetch news articles", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void launchNewsFragment(ArticleModel article) {
+        Fragment newsFragment = new NewsFragment(article);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, newsFragment).addToBackStack(null).commit();
+        fragmentContainerView.setVisibility(View.VISIBLE);
     }
 }

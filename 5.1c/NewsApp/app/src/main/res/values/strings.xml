@@ -7,4 +7,10 @@
     <string name="standard_news_image">standard news image</string>
     <string name="standard_news_title">standardNewsTitle</string>
     <string name="standard_news_description">standard news description</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="this_will_be_the_title">This will be the title</string>
+    <string name="news_article_image">news article image</string>
+    <string name="this_will_be_the_description">this will be the description</string>
+    <string name="close">close</string>
 </resources>

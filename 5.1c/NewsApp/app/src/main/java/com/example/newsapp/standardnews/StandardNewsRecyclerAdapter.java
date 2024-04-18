@@ -9,10 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.newsapp.ArticleModel;
-import com.example.newsapp.NewsApiResponse;
+import com.example.newsapp.data.ArticleModel;
+import com.example.newsapp.data.NewsApiResponse;
+import com.example.newsapp.utility.NewsItemClickListener;
 import com.example.newsapp.R;
-import com.example.newsapp.topnews.TopStoriesRecyclerAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -20,9 +20,11 @@ import java.util.List;
 public class StandardNewsRecyclerAdapter extends RecyclerView.Adapter<StandardNewsRecyclerAdapter.ViewHolder> {
 
     private List<ArticleModel> articleList;
+    private NewsItemClickListener listener;
 
-    public StandardNewsRecyclerAdapter(NewsApiResponse response) {
+    public StandardNewsRecyclerAdapter(NewsApiResponse response, NewsItemClickListener listener) {
         articleList = response.getArticles();
+        this.listener = listener;
     }
 
     @NonNull
@@ -46,7 +48,7 @@ public class StandardNewsRecyclerAdapter extends RecyclerView.Adapter<StandardNe
         return articleList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView standardNewsImage;
         TextView standardNewsTitle;
         TextView standardNewsDescription;
@@ -56,6 +58,17 @@ public class StandardNewsRecyclerAdapter extends RecyclerView.Adapter<StandardNe
             standardNewsImage = itemView.findViewById(R.id.standardNewsImage);
             standardNewsTitle = itemView.findViewById(R.id.standardNewsTitle);
             standardNewsDescription = itemView.findViewById(R.id.standardNewsDescription);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        ArticleModel clickedArticle = articleList.get(position);
+                        listener.onNewsItemClick(clickedArticle);
+                    }
+                }
+            });
         }
     }
 }

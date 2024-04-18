@@ -1,6 +1,6 @@
-package com.example.newsapp;
+package com.example.newsapp.data;
 
-import androidx.annotation.Nullable;
+import com.example.newsapp.data.NewsApiResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

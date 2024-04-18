@@ -45,4 +45,8 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("com.squareup.picasso:picasso:2.71828")
 
+    val fragment_version = "1.6.2"
+
+    // Java language implementation
+    implementation("androidx.fragment:fragment:$fragment_version")
 }
