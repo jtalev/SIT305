@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">iTubeApp</string>
+    <string name="username">username:</string>
+    <string name="password">password</string>
+    <string name="login">LOGIN</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="youtube_url">YouTube URL:</string>
+    <string name="play">PLAY</string>
+    <string name="my_playlist">MY PLAYLIST</string>
+    <string name="add_to_playlist">ADD TO PLAYLIST</string>
+    <string name="back_button">back button</string>
+</resources>
