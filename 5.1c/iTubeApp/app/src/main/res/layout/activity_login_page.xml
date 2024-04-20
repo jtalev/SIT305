@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginPageActivity">
+    tools:context=".login.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,7 +54,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/password_input"/>
+                    android:id="@+id/password_input"
+                    android:inputType="textPassword"/>
 
             </LinearLayout>
 

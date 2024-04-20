@@ -9,4 +9,10 @@
     <string name="my_playlist">MY PLAYLIST</string>
     <string name="add_to_playlist">ADD TO PLAYLIST</string>
     <string name="back_button">back button</string>
+    <string name="full_name">Full name</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="Username">Username</string>
+    <string name="Password">Password</string>
+    <string name="create_account">Create account</string>
+    <string name="this_will_be_a_url">this will be a url</string>
 </resources>
