@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private NewsApiService newsService;
     private RecyclerView topStoriesRecyclerView;
-    private RecyclerView newsRecyclerView;
+    private RecyclerView standardNewsRecyclerView;
     private TopStoriesRecyclerAdapter topStoriesAdapter;
     private StandardNewsRecyclerAdapter standardNewsAdapter;
     private FragmentContainerView fragmentContainerView;
@@ -42,9 +42,9 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager topStoriesLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         topStoriesRecyclerView.setLayoutManager(topStoriesLayoutManager);
 
-        newsRecyclerView = findViewById(R.id.newsRecyclerView);
+        standardNewsRecyclerView = findViewById(R.id.newsRecyclerView);
         LinearLayoutManager standardNewsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        newsRecyclerView.setLayoutManager(standardNewsLayoutManager);
+        standardNewsRecyclerView.setLayoutManager(standardNewsLayoutManager);
 
         fragmentContainerView = findViewById(R.id.fragmentContainerView);
 
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                             launchNewsFragment(article);
                         }
                     });
-                    newsRecyclerView.setAdapter(standardNewsAdapter);
+                    standardNewsRecyclerView.setAdapter(standardNewsAdapter);
 
                 } else {
                     Log.e("MainActivity", "Failed to fetch article data on response: " + response.message());
