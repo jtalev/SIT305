@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "User")
+@Entity(tableName = "user")
 public class User {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "uid")
@@ -28,8 +28,7 @@ public class User {
     public User() {
     }
 
-    public User(int uid, String username, String email, String firstName, String lastName, String password) {
-        this.uid = uid;
+    public User(String firstName, String lastName, String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.firstName = firstName;

@@ -4,7 +4,7 @@
     <string name="password">Password</string>
     <string name="remember_me">Remember me</string>
     <string name="login">Login</string>
-    <string name="need_and_account">Need and account?</string>
+    <string name="need_an_account">Need an account?</string>
     <string name="confirm_password">Confirm password</string>
     <string name="email">Email</string>
     <string name="last_name">Last name</string>

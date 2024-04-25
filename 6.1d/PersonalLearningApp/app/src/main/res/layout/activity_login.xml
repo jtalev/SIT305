@@ -125,7 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:text="@string/need_and_account"
+            android:text="@string/need_an_account"
             android:textAllCaps="false"
             android:textColor="#3EC1D5"
             android:textSize="16sp" />

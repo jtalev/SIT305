@@ -13,11 +13,17 @@ import java.util.List;
 
 @Dao
 public interface UserDao {
-    @Query("SELECT * FROM User")
+    @Query("SELECT * FROM user")
     public ListenableFuture<List<User>> getAll();
 
-    @Query("SELECT * FROM User WHERE uid = :uid")
+    @Query("SELECT * FROM user WHERE uid = :uid")
     public ListenableFuture<User> getUserById(int uid);
+
+    @Query("SELECT * FROM user WHERE username = :username")
+    public ListenableFuture<User> getUserByUsername(String username);
+
+    @Query("SELECT * FROM User WHERE email = :email")
+    public ListenableFuture<User> getUserByEmail(String email);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public ListenableFuture<Void> insert(User user);

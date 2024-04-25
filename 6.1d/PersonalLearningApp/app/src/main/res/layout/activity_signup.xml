@@ -27,31 +27,38 @@
         <com.google.android.material.textfield.TextInputEditText
             style="@style/CustomTextInputEditText"
             android:hint="@string/first_name"
-            android:id="@+id/first_name_input"/>
+            android:id="@+id/first_name_input"
+            android:inputType="text"/>
         <com.google.android.material.textfield.TextInputEditText
             style="@style/CustomTextInputEditText"
             android:hint="@string/last_name"
-            android:id="@+id/last_name_input"/>
+            android:id="@+id/last_name_input"
+            android:inputType="text"/>
         <com.google.android.material.textfield.TextInputEditText
             style="@style/CustomTextInputEditText"
             android:hint="@string/username"
-            android:id="@+id/username_input"/>
+            android:id="@+id/username_input"
+            android:inputType="text"/>
         <com.google.android.material.textfield.TextInputEditText
             style="@style/CustomTextInputEditText"
             android:hint="@string/email"
-            android:id="@+id/email_input"/>
+            android:id="@+id/email_input"
+            android:inputType="text"/>
         <com.google.android.material.textfield.TextInputEditText
             style="@style/CustomTextInputEditText"
             android:hint="@string/confirm_email"
-            android:id="@+id/confirm_email_input"/>
+            android:id="@+id/confirm_email_input"
+            android:inputType="text"/>
         <com.google.android.material.textfield.TextInputEditText
             style="@style/CustomTextInputEditText"
             android:hint="@string/password"
-            android:id="@+id/password_input"/>
+            android:id="@+id/password_input"
+            android:inputType="textPassword"/>
         <com.google.android.material.textfield.TextInputEditText
             style="@style/CustomTextInputEditText"
             android:hint="@string/confirm_password"
-            android:id="@+id/confirm_password_input"/>
+            android:id="@+id/confirm_password_input"
+            android:inputType="textPassword"/>
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="200sp"
             android:layout_height="50sp"
@@ -61,7 +68,8 @@
             android:textColor="@color/white"
             android:textAllCaps="false"
             android:layout_marginTop="30sp"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:onClick="registerUser"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

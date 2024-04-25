@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="CustomTextInputEditText" parent="Widget.MaterialComponents.TimePicker.Display.TextInputEditText">
+    <style name="CustomTextInputEditText">
         <!-- Add your desired attributes here -->
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">48sp</item>
