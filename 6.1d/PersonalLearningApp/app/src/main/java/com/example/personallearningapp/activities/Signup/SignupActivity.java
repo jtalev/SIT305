@@ -16,6 +16,9 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class SignupActivity extends AppCompatActivity {
     private SignupViewModel viewModel;
     private TextInputEditText firstNameInput;
@@ -42,83 +45,67 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void registerUser(View view) {
-        String[][] inputs = {{firstNameInput.getText().toString().trim(), "first name"},
-                             {lastNameInput.getText().toString().trim(), "last name"},
-                             {usernameInput.getText().toString().trim(), "username"},
-                             {emailInput.getText().toString().trim(), "email"},
-                             {confirmEmailInput.getText().toString().trim(), "confirm email"},
-                             {passwordInput.getText().toString().trim(), "password"},
-                             {confirmPasswordInput.getText().toString().trim(), "confirm password"}};
+        Map<String, String> inputs = new LinkedHashMap<>();
+        inputs.put("first name", firstNameInput.getText().toString().trim());
+        inputs.put("last name", lastNameInput.getText().toString().trim());
+        inputs.put("username", usernameInput.getText().toString().trim());
+        inputs.put("email", emailInput.getText().toString().trim());
+        inputs.put("confirm email", confirmEmailInput.getText().toString().trim());
+        inputs.put("password", passwordInput.getText().toString().trim());
+        inputs.put("confirm password", confirmPasswordInput.getText().toString().trim());
 
-        for (String[] inputPair : inputs) {
-            String input = inputPair[0];
-            String fieldName = inputPair[1];
+        if (isFormValid(inputs)) {
+            User user = new User(
+                    inputs.get("first name"),
+                    inputs.get("last name"),
+                    inputs.get("username"),
+                    inputs.get("email"),
+                    inputs.get("password"));
+
+            checkUserByUsername(user);
+        }
+    }
+
+    private boolean isFormValid(Map<String, String> inputs) {
+        for (Map.Entry<String, String> entry : inputs.entrySet()) {
+            String input = entry.getValue();
+            String fieldName = entry.getKey();
 
             if (input.isEmpty()) {
                 Toast.makeText(this, fieldName + " is empty", Toast.LENGTH_SHORT).show();
-                return;
+                return false;
             }
         }
-        if (!Util.isValidEmail(inputs[3][0])) {
-            Toast.makeText(this, inputs[3][1] + " is not valid", Toast.LENGTH_SHORT).show();
-            return;
+        if (!Util.isValidEmail(inputs.get("email"))) {
+            Toast.makeText(this,"email is not valid", Toast.LENGTH_SHORT).show();
+            return false;
         }
-        if (!inputs[3][0].equals(inputs[4][0])) {
+        if (!inputs.get("email").equals(inputs.get("confirm email"))) {
             Toast.makeText(this, "emails must match", Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
-        if (!Util.isValidPassword(inputs[5][0])) {
-            Toast.makeText(this, inputs[5][1] + " must be at least 8 characters long", Toast.LENGTH_SHORT).show();
-            return;
+        if (!Util.isValidPassword(inputs.get("password"))) {
+            Toast.makeText(this,"password must be at least 8 characters long", Toast.LENGTH_SHORT).show();
+            return false;
         }
-        if (!inputs[5][0].equals(inputs[6][0])) {
+        if (!inputs.get("password").equals(inputs.get("confirm password"))) {
             Toast.makeText(this, "passwords must match", Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
 
-        User user = new User(inputs[0][0], inputs[1][0], inputs[2][0], inputs[3][0], inputs[5][0]);
-        ListenableFuture<User> userByUsernameFuture = viewModel.getUserByUsername(user.getUsername());
-        ListenableFuture<User> userByEmailFuture = viewModel.getUserByEmail(user.getEmail());
+        return true;
+    }
 
+    private void checkUserByUsername(User user) {
+        ListenableFuture<User> userByUsernameFuture = viewModel.getUserByUsername(user.getUsername());
         Futures.addCallback(userByUsernameFuture, new FutureCallback<User>() {
             @Override
             public void onSuccess(User existingUserByUsername) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (existingUserByUsername!=null) {
-                            Toast.makeText(SignupActivity.this, "User already exists with this username", Toast.LENGTH_SHORT).show();
-                        } else {
-                            // Continue with email check
-                            Futures.addCallback(userByEmailFuture, new FutureCallback<User>() {
-                                @Override
-                                public void onSuccess(User existingUserByEmail) {
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if (existingUserByEmail!=null) {
-                                                Toast.makeText(SignupActivity.this, "User already exists with that email", Toast.LENGTH_SHORT).show();
-                                            } else {
-                                                viewModel.insert(user);
-                                                Intent intent = new Intent(SignupActivity.this, UserInterestSelectionActivity.class);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        }
-                                    });
-                                }
-
-                                @Override
-                                public void onFailure(Throwable t) {
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(SignupActivity.this, "Error checking email existence", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            }, MoreExecutors.directExecutor());
-                        }
+                runOnUiThread(() -> {
+                    if (existingUserByUsername != null) {
+                        Toast.makeText(SignupActivity.this, "User already exists with this username", Toast.LENGTH_SHORT).show();
+                    } else {
+                        checkUserByEmail(user);
                     }
                 });
             }
@@ -126,6 +113,32 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onFailure(Throwable t) {
                 Toast.makeText(SignupActivity.this, "Error checking username existence", Toast.LENGTH_SHORT).show();
+            }
+        }, MoreExecutors.directExecutor());
+    }
+
+    private void checkUserByEmail(User user) {
+        ListenableFuture<User> userByEmailFuture = viewModel.getUserByEmail(user.getEmail());
+        Futures.addCallback(userByEmailFuture, new FutureCallback<User>() {
+            @Override
+            public void onSuccess(User existingUserByEmail) {
+                runOnUiThread(() -> {
+                    if (existingUserByEmail != null) {
+                        Toast.makeText(SignupActivity.this, "User already exists with that email", Toast.LENGTH_SHORT).show();
+                    } else {
+                        viewModel.insert(user);
+                        Intent intent = new Intent(SignupActivity.this, UserInterestSelectionActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                runOnUiThread(() -> {
+                    Toast.makeText(SignupActivity.this, "Error checking email existence", Toast.LENGTH_SHORT).show();
+                });
             }
         }, MoreExecutors.directExecutor());
     }

@@ -11,4 +11,24 @@
     <string name="first_name">First name</string>
     <string name="confirm_email">Confirm email</string>
     <string name="sign_up">Sign up</string>
+    <string name="your">Your</string>
+    <string name="interests">Interests</string>
+    <string name="select_up_to_10_choices">Select up to 10 choices</string>
+    <string name="submit">Submit</string>
+    <string name="algorithms">Algorithms</string>
+    <string name="data_structures">Data Structures</string>
+    <string name="dev_ops">Dev-Ops</string>
+    <string name="agile_methodology">Agile Methodology</string>
+    <string name="tdd">TDD</string>
+    <string name="software_architecture">Software Architecture</string>
+    <string name="microservices">Microservices</string>
+    <string name="containerization">Containerization</string>
+    <string name="cloud_computing">Cloud Computing</string>
+    <string name="version_control">Version Control</string>
+    <string name="security">Security</string>
+    <string name="mobile_development">Mobile Development</string>
+    <string name="web_development">Web Development</string>
+    <string name="design_patterns">Design Patterns</string>
+    <string name="time_complexity">Time Complexity</string>
+    <string name="testing">Testing</string>
 </resources>
