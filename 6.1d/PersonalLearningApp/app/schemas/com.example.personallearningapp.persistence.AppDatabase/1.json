@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "04ad44d7ce693b2b08d8c069b8e31076",
+    "identityHash": "0df00917463a5351aedd1efa640c2e08",
     "entities": [
       {
         "tableName": "user",
@@ -51,12 +51,22 @@
             "uid"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_user_username",
+            "unique": true,
+            "columnNames": [
+              "username"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_user_username` ON `${TABLE_NAME}` (`username`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
         "tableName": "user_interest",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `uid` INTEGER NOT NULL, `interest` TEXT, FOREIGN KEY(`uid`) REFERENCES `user`(`uid`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `username` TEXT, `interest` TEXT, FOREIGN KEY(`username`) REFERENCES `user`(`username`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -65,10 +75,10 @@
             "notNull": true
           },
           {
-            "fieldPath": "uid",
-            "columnName": "uid",
-            "affinity": "INTEGER",
-            "notNull": true
+            "fieldPath": "username",
+            "columnName": "username",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "interest",
@@ -90,10 +100,10 @@
             "onDelete": "CASCADE",
             "onUpdate": "NO ACTION",
             "columns": [
-              "uid"
+              "username"
             ],
             "referencedColumns": [
-              "uid"
+              "username"
             ]
           }
         ]
@@ -102,7 +112,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '04ad44d7ce693b2b08d8c069b8e31076')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0df00917463a5351aedd1efa640c2e08')"
     ]
   }
 }

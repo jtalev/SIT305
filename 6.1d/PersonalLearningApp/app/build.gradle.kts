@@ -53,4 +53,6 @@ dependencies {
     implementation("androidx.room:room-guava:$room_version")
     implementation("com.google.guava:guava:31.0.1-android")
     implementation("commons-validator:commons-validator:1.8.0")
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 }

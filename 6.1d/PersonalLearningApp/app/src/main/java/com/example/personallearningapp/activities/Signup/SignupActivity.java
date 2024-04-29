@@ -128,6 +128,7 @@ public class SignupActivity extends AppCompatActivity {
                     } else {
                         viewModel.insert(user);
                         Intent intent = new Intent(SignupActivity.this, UserInterestSelectionActivity.class);
+                        intent.putExtra("USERNAME", user.getUsername());
                         startActivity(intent);
                         finish();
                     }

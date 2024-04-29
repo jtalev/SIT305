@@ -8,16 +8,16 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "user_interest",
         foreignKeys = @ForeignKey(entity = User.class,
-                parentColumns = "uid",
-                childColumns = "uid",
+                parentColumns = "username",
+                childColumns = "username",
                 onDelete = ForeignKey.CASCADE))
 public class UserInterest {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int id;
 
-    @ColumnInfo(name = "uid")
-    private int uid;
+    @ColumnInfo(name = "username")
+    private String username;
 
     @ColumnInfo(name = "interest")
     private String interest;
@@ -25,9 +25,8 @@ public class UserInterest {
     public UserInterest() {
     }
 
-    public UserInterest(int id, int uid, String interest) {
-        this.id = id;
-        this.uid = uid;
+    public UserInterest(String username, String interest) {
+        this.username = username;
         this.interest = interest;
     }
 
@@ -39,13 +38,9 @@ public class UserInterest {
         this.id = id;
     }
 
-    public int getUid() {
-        return uid;
-    }
+    public String getUsername() {return username;}
 
-    public void setUid(int uid) {
-        this.uid = uid;
-    }
+    public void setUsername(String username) {this.username = username;}
 
     public String getInterest() {
         return interest;

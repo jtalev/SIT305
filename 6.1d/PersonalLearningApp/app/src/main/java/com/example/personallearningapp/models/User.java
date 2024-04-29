@@ -2,15 +2,21 @@ package com.example.personallearningapp.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "user")
-public class User {
+import org.checkerframework.common.aliasing.qual.Unique;
+
+import java.io.Serializable;
+
+@Entity(tableName = "user", indices = {@Index(value = {"username"}, unique = true)})
+public class User implements Serializable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "uid")
     private int uid;
 
     @ColumnInfo(name = "username")
+    @Unique
     private String username;
 
     @ColumnInfo(name = "email")

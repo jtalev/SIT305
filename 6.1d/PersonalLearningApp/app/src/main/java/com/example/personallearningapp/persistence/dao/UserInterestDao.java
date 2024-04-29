@@ -13,8 +13,8 @@ import java.util.List;
 
 @Dao
 public interface UserInterestDao {
-    @Query("SELECT * FROM user_interest")
-    public ListenableFuture<List<UserInterest>> getAllByUid();
+    @Query("SELECT * FROM user_interest WHERE username = :username")
+    public ListenableFuture<List<UserInterest>> getAllByUsername(String username);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public ListenableFuture<Void> insert(UserInterest userInterest);

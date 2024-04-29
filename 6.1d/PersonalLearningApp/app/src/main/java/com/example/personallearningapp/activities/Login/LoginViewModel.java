@@ -1,4 +1,4 @@
-package com.example.personallearningapp.activities.Signup;
+package com.example.personallearningapp.activities.Login;
 
 import android.content.Context;
 
@@ -8,10 +8,10 @@ import com.example.personallearningapp.models.User;
 import com.example.personallearningapp.persistence.AppDatabase;
 import com.google.common.util.concurrent.ListenableFuture;
 
-public class SignupViewModel extends ViewModel {
-    private final AppDatabase appDb;
+public class LoginViewModel extends ViewModel {
+    private AppDatabase appDb;
 
-    public SignupViewModel (Context context) {
+    public LoginViewModel(Context context) {
         this.appDb = AppDatabase.getInstance(context);
     }
 
@@ -19,11 +19,7 @@ public class SignupViewModel extends ViewModel {
         return appDb.getUserDao().getUserByUsername(username);
     }
 
-    public ListenableFuture<User> getUserByEmail(String email) {
-        return appDb.getUserDao().getUserByEmail(email);
-    }
-
-    public ListenableFuture<Void> insert(User user) {
-        return appDb.getUserDao().insert(user);
+    public boolean isUserLoginValid(User user, String username, String password) {
+        return username.equals(user.getUsername()) && password.equals((user.getPassword()));
     }
 }
