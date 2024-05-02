@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="viewModel"
+            name="ViewModel"
             type="com.example.lostandfound.presentation.createAdvert.CreateAdvertViewModel" />
     </data>
 
@@ -62,12 +62,15 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
+                android:text="@={ViewModel.state.name}"
+                android:id="@+id/name_input"
                 android:textSize="18sp"
                 android:background="@drawable/text_input_background"
                 android:hint="@string/name"
                 android:textColorHint="@color/white"
                 android:inputType="text"
-                android:autofillHints="name" />
+                android:autofillHints="name"
+                android:paddingHorizontal="10sp"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,7 +86,8 @@
                 android:hint="@string/phone"
                 android:textColorHint="@color/white"
                 android:inputType="phone"
-                android:autofillHints="phone"/>
+                android:autofillHints="phone"
+                android:paddingHorizontal="10sp"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -94,12 +98,14 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="100sp"
+                android:text="@={ViewModel.state.description}"
                 android:textSize="18sp"
                 android:background="@drawable/text_input_background"
                 android:hint="@string/description"
                 android:textColorHint="@color/white"
                 android:inputType="text"
-                android:autofillHints="text"/>
+                android:autofillHints="text"
+                android:paddingHorizontal="10sp"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -115,7 +121,8 @@
                 android:hint="@string/date"
                 android:textColorHint="@color/white"
                 android:autofillHints="text"
-                android:inputType="date"/>
+                android:inputType="date"
+                android:paddingHorizontal="10sp"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -131,7 +138,8 @@
                 android:hint="@string/location"
                 android:textColorHint="@color/white"
                 android:inputType="text"
-                android:autofillHints="text"/>
+                android:autofillHints="text"
+                android:paddingHorizontal="10sp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
