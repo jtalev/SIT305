@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">LostAndFound</string>
+    <string name="show_lost_found_items"><![CDATA[show lost & found items]]></string>
+    <string name="create_a_new_advert">create a new advert</string>
+    <string name="save">save</string>
+    <string name="location">Location</string>
+    <string name="date">Date</string>
+    <string name="description">Description</string>
+    <string name="phone">Phone</string>
+    <string name="name">Name</string>
+    <string name="found">Found</string>
+    <string name="lost">Lost</string>
+    <string name="post_type">Post Type:</string>
+    <string name="title_activity_create_advert">CreateAdvertActivity</string>
+    <string name="title_activity_show_adverts">ShowAdvertsActivity</string>
+    <string name="lost_found"><![CDATA[Lost & Found]]></string>
+    <string name="title_activity_main">MainActivity</string>
+</resources>
