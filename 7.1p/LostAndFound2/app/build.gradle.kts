@@ -80,4 +80,5 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation("com.google.dagger:dagger:2.51.1")
     kapt("com.google.dagger:dagger-compiler:2.51.1")
+    implementation("com.googlecode.libphonenumber:libphonenumber:8.2.0")
 }

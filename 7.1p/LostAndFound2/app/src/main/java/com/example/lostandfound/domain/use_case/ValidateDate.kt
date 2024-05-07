@@ -2,6 +2,7 @@ package com.example.lostandfound.domain.use_case
 
 import java.lang.Exception
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 /**
@@ -29,6 +30,15 @@ class ValidateDate(private var stringResources: StringResources) {
 
         try {
             val parsedDate = dateFormat.parse(date)
+            val calendar = Calendar.getInstance()
+            val currentDate = calendar.time
+
+            if(parsedDate != null && parsedDate.after(currentDate)) {
+                return ValidationResult(
+                    successful = false,
+                    errorMessage = stringResources.dateCantBeFuture
+                )
+            }
             if(parsedDate != null) {
                 return ValidationResult(successful = true)
             } else {

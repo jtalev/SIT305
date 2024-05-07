@@ -4,33 +4,33 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
-class ValidateDescriptionTest {
-    private lateinit var validateDescription: ValidateDescription
+class ValidateLocationTest {
+    private lateinit var validateLocation: ValidateLocation
     private lateinit var stringResources: StringResources
 
     @Before
     fun setUp() {
         stringResources = StringResources()
-        validateDescription = ValidateDescription(stringResources)
+        validateLocation = ValidateLocation(stringResources)
     }
 
     @Test
-    fun descriptionIsEmpty() {
-        val result = validateDescription.execute("")
+    fun locationIsEmpty() {
+        val result = validateLocation.execute("")
 
         assertEquals(result.successful, false)
     }
 
     @Test
-    fun descriptionIsBlankSpace() {
-        val result = validateDescription.execute(" ")
+    fun locationIsBlankSpace() {
+        val result = validateLocation.execute(" ")
 
         assertEquals(result.successful, false)
     }
 
     @Test
-    fun descriptionIsValid() {
-        val result = validateDescription.execute("Valid description")
+    fun locationIsValid() {
+        val result = validateLocation.execute("Valid description")
 
         assertEquals(result.successful, true)
     }

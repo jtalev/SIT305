@@ -112,6 +112,11 @@ class ShowAdvertsActivity: ComponentActivity() {
                 }
         ) {
             Text(
+                text = advert.type,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
                 text = "Name: ${advert.name}",
                 fontWeight = FontWeight.Bold
             )
