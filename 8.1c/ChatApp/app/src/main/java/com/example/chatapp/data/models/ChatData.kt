@@ -1,4 +1,4 @@
-package com.example.chatapp.domain.entities
+package com.example.chatapp.data.models
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,4 +1,4 @@
-package com.example.chatapp.domain.services
+package com.example.chatapp.data.services
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
