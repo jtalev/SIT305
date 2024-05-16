@@ -3,7 +3,6 @@ package com.example.chatapp.data
 import com.example.chatapp.data.models.ChatData
 import com.example.chatapp.data.models.ChatMessage
 import com.example.chatapp.data.models.ChatResponse
-import com.example.chatapp.data.services.RetrofitHelper
 import com.example.chatapp.domain.use_cases.entities.Chat
 import com.example.chatapp.domain.use_cases.entities.Message
 import kotlinx.coroutines.flow.MutableStateFlow

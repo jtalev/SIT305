@@ -8,13 +8,20 @@ class SendMessageUseCase(
     private val repo: ChatRepo
 ) {
 
-    suspend operator fun invoke(username: String, prompt: String) {
+    suspend fun sendMessage(username: String, prompt: String) {
         val message = Message(
             messageOwner = username,
             message = prompt
         )
 
        repo.addMessage(message)
+    }
+
+    suspend fun receiveReply(username: String, prompt: String) {
+        val message = Message(
+            messageOwner = username,
+            message = prompt
+        )
 
         try {
             val reply = repo.getApiResponse(message)
