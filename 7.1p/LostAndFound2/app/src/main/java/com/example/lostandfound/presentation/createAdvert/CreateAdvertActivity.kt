@@ -1,14 +1,23 @@
 package com.example.lostandfound.presentation.createAdvert
 
+import android.R.attr.data
+import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,16 +30,49 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.lostandfound.R
 import com.example.lostandfound.presentation.home.MainActivity
+import com.google.android.gms.common.api.Status
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+
 
 class CreateAdvertActivity : ComponentActivity() {
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private val autocompleteLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val intent = result.data
+                if (intent != null) {
+                    val place = Autocomplete.getPlaceFromIntent(intent)
+                    Log.i(
+                        "PlaceData", "Place: ${place.name}, ${place.id}"
+                    )
+                }
+            } else if (result.resultCode == Activity.RESULT_CANCELED) {
+                // The user canceled the operation.
+                Log.i("PlaceData", "User canceled autocomplete")
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -41,6 +83,9 @@ class CreateAdvertActivity : ComponentActivity() {
                 val viewModel = viewModel<CreateAdvertViewModel>()
                 val state = viewModel.state
                 val context = LocalContext.current
+                fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+                var location by remember { mutableStateOf(state.location) }
+
                 LaunchedEffect(key1 = context) {
                     viewModel.validationEvents.collect {event ->
                         when (event) {
@@ -57,9 +102,10 @@ class CreateAdvertActivity : ComponentActivity() {
                         }
                     }
                 }
+
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxSize()
                         .padding(32.dp),
                     verticalArrangement = Arrangement.Center
                 ) {
@@ -206,25 +252,62 @@ class CreateAdvertActivity : ComponentActivity() {
                     }
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    TextField(
-                        value = state.location,
-                        onValueChange = {
-                            viewModel.onEvent(AdvertFormEvent.LocationChanged(it))
-                        },
-                        isError = state.locationError != null,
-                        modifier = Modifier.fillMaxWidth(),
-                        placeholder = {
-                            Text(text = "Location")
-                        },
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Text
+                    Row(
+                        modifier = Modifier.height(50.dp)
+                    ) {
+                        TextField(
+                            value = state.location,
+                            onValueChange = {
+                                viewModel.onEvent(AdvertFormEvent.LocationChanged(it))
+                            },
+                            isError = state.locationError != null,
+                            placeholder = {
+                                Text(text = "Location")
+                            },
+                            readOnly = true,
+                            modifier = Modifier.width(200.dp)
                         )
-                    )
+                        Button(onClick = {
+                            Log.d("clickable", "text field clicked")
+                            val fields =
+                                listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
+                            val intent = Autocomplete.IntentBuilder(
+                                AutocompleteActivityMode.OVERLAY,
+                                fields
+                            ).build(context)
+                            autocompleteLauncher.launch(intent)
+                        },
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .width(80.dp)
+                                .padding(3.dp, 0.dp, 0.dp, 0.dp)){
+                            Image(
+                                painter = painterResource(id = R.drawable.location_icon),
+                                contentDescription = "Location icon",
+                            )
+                        }
+                        Button(onClick = {
+                            getLocation() { newLocation ->
+                                location = newLocation
+                                viewModel.onEvent(AdvertFormEvent.LocationChanged(newLocation))
+                                Log.d("current_location", newLocation)
+                            }
+                        },
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .width(80.dp)
+                                .padding(3.dp, 0.dp, 0.dp, 0.dp)){
+                            Image(
+                                painter = painterResource(id = R.drawable.location_icon),
+                                contentDescription = "Location icon",
+                            )
+                        }
+                    }
                     if (state.locationError != null) {
                         Text(
                             text = state.locationError,
                             color = MaterialTheme.colorScheme.error,
-                            modifier = Modifier.align(Alignment.End)
+                            modifier = Modifier.align(Alignment.End),
                         )
                     } else {
                         Text(
@@ -261,4 +344,27 @@ class CreateAdvertActivity : ComponentActivity() {
             }
         }
     }
+
+    private fun getLocation(onLocationReceived: (String) -> Unit) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(this,
+                    arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 100)
+            onLocationReceived("Permissions missing")
+            return
+        }
+
+        val location = fusedLocationClient.lastLocation
+        location.addOnSuccessListener {
+            val currLocation = if (it != null) {
+                "${it.latitude}, ${it.longitude}"
+            } else {
+                "Failed to get current location"
+            }
+            onLocationReceived(currLocation)
+        }
+    }
 }
+
