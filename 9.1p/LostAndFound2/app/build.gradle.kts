@@ -22,16 +22,10 @@ android {
             useSupportLibrary = true
         }
 
-        val keystoreFile = project.rootProject.file("local.properties")
-        val properties = Properties()
-        properties.load(keystoreFile.inputStream())
-
-        val mapsApiKey = properties.getProperty("mapsApiKey") ?: ""
-
         buildConfigField(
-            type = "String",
-            name = "MAPS_API_KEY",
-            value = "\"mapsApiKey\""
+            "String",
+            "MAPS_API_KEY",
+            "\"${project.findProperty("mapsApiKey")}\""
         )
     }
 

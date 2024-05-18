@@ -8,7 +8,7 @@ class MyApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Places.initialize(applicationContext, "AIzaSyAs-06L2RG7mLbwKJlbf4xsrCewfkfotRs")
+        Places.initialize(applicationContext, BuildConfig.MAPS_API_KEY)
     }
 
 }
