@@ -15,4 +15,5 @@
     <string name="title_activity_show_adverts">ShowAdvertsActivity</string>
     <string name="lost_found"><![CDATA[Lost & Found]]></string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_map">MapActivity</string>
 </resources>

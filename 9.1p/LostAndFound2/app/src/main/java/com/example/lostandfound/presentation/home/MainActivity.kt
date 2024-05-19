@@ -20,9 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.example.lostandfound.R
 import com.example.lostandfound.presentation.showAdverts.ShowAdvertsActivity
 import com.example.lostandfound.presentation.createAdvert.CreateAdvertActivity
+import com.example.lostandfound.presentation.map.MapActivity
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +63,19 @@ class MainActivity : ComponentActivity() {
                             .width(250.dp)
                     ) {
                         Text(text = "SHOW ALL ITEMS")
+                    }
+                    Spacer(modifier = Modifier.height(30.dp))
+
+                    Button(
+                        onClick = {
+                            val intent = Intent(context, MapActivity::class.java)
+                            startActivity(intent)
+                        },
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .width(250.dp)
+                    ) {
+                        Text(text = "SHOW ON MAP")
                     }
                     Spacer(modifier = Modifier.height(100.dp))
                 }
