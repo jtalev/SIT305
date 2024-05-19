@@ -14,7 +14,7 @@ class MockAdvertRepository: IRepository{
             "0408839487",
             "Lost set of keys for Volkswagen Transporter",
             "24-04-2024",
-            "Park"
+            "-36.9848, 143.3906"
         ),
         Advert(
             1,
@@ -23,7 +23,7 @@ class MockAdvertRepository: IRepository{
             "0408839487",
             "Found black leather wallet",
             "24-04-2024",
-            "Cafe"
+            "-37.8136, 144.9631"
         )
     )
 
