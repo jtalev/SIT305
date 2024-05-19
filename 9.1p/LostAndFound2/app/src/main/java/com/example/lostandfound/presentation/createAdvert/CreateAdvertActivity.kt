@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +22,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -56,16 +58,20 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 class CreateAdvertActivity : ComponentActivity() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private val autocompleteLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    private lateinit var autocompleteLauncher: ActivityResultLauncher<Intent>
+    private var onLocationReceived: ((String) -> Unit)? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        autocompleteLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val intent = result.data
                 if (intent != null) {
                     val place = Autocomplete.getPlaceFromIntent(intent)
-                    Log.i(
-                        "PlaceData", "Place: ${place.name}, ${place.id}"
-                    )
+                    val selLocation = place.latLng?.let { "${it.latitude}, ${it.longitude}" } ?: "failed to get location"
+                    onLocationReceived?.invoke(selLocation.toString())
                 }
             } else if (result.resultCode == Activity.RESULT_CANCELED) {
                 // The user canceled the operation.
@@ -73,8 +79,6 @@ class CreateAdvertActivity : ComponentActivity() {
             }
         }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         setContent {
             Surface(
                 modifier = Modifier.fillMaxWidth(),
@@ -83,8 +87,9 @@ class CreateAdvertActivity : ComponentActivity() {
                 val viewModel = viewModel<CreateAdvertViewModel>()
                 val state = viewModel.state
                 val context = LocalContext.current
+
                 fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-                var location by remember { mutableStateOf(state.location) }
+
 
                 LaunchedEffect(key1 = context) {
                     viewModel.validationEvents.collect {event ->
@@ -265,41 +270,36 @@ class CreateAdvertActivity : ComponentActivity() {
                                 Text(text = "Location")
                             },
                             readOnly = true,
-                            modifier = Modifier.width(200.dp)
+                            modifier = Modifier.width(210.dp)
                         )
                         Button(onClick = {
-                            Log.d("clickable", "text field clicked")
-                            val fields =
-                                listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
-                            val intent = Autocomplete.IntentBuilder(
-                                AutocompleteActivityMode.OVERLAY,
-                                fields
-                            ).build(context)
-                            autocompleteLauncher.launch(intent)
-                        },
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .width(80.dp)
-                                .padding(3.dp, 0.dp, 0.dp, 0.dp)){
-                            Image(
-                                painter = painterResource(id = R.drawable.location_icon),
-                                contentDescription = "Location icon",
-                            )
-                        }
-                        Button(onClick = {
-                            getLocation() { newLocation ->
-                                location = newLocation
+                            getSelectedLocation{ newLocation ->
                                 viewModel.onEvent(AdvertFormEvent.LocationChanged(newLocation))
-                                Log.d("current_location", newLocation)
                             }
                         },
                             modifier = Modifier
                                 .fillMaxHeight()
-                                .width(80.dp)
+                                .width(70.dp)
+                                .padding(3.dp, 0.dp, 0.dp, 0.dp)){
+                            Image(
+                                painter = painterResource(id = R.drawable.search_icon),
+                                contentDescription = "Search icon",
+                                modifier = Modifier.size(50.dp)
+                            )
+                        }
+                        Button(onClick = {
+                            getCurrentLocation() { newLocation ->
+                                viewModel.onEvent(AdvertFormEvent.LocationChanged(newLocation))
+                            }
+                        },
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .width(70.dp)
                                 .padding(3.dp, 0.dp, 0.dp, 0.dp)){
                             Image(
                                 painter = painterResource(id = R.drawable.location_icon),
                                 contentDescription = "Location icon",
+                                modifier = Modifier.size(50.dp)
                             )
                         }
                     }
@@ -345,7 +345,7 @@ class CreateAdvertActivity : ComponentActivity() {
         }
     }
 
-    private fun getLocation(onLocationReceived: (String) -> Unit) {
+    private fun getCurrentLocation(onLocationReceived: (String) -> Unit) {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -365,6 +365,17 @@ class CreateAdvertActivity : ComponentActivity() {
             }
             onLocationReceived(currLocation)
         }
+    }
+
+    private fun getSelectedLocation(onLocationReceived: (String) -> Unit) {
+        this.onLocationReceived = onLocationReceived
+        val fields =
+            listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
+        val intent = Autocomplete.IntentBuilder(
+            AutocompleteActivityMode.OVERLAY,
+            fields
+        ).build(this)
+        autocompleteLauncher.launch(intent)
     }
 }
 
