@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.personallearningapp.R;
+import com.example.personallearningapp.activities.Profile.ProfileActivity;
 import com.example.personallearningapp.activities.Signup.SignupActivity;
 import com.example.personallearningapp.activities.Task.TaskActivity;
 import com.example.personallearningapp.models.User;
@@ -68,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "username or password is incorrect", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Intent intent = new Intent(LoginActivity.this, TaskActivity.class);
+                Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
                 intent.putExtra("USER", user);
                 startActivity(intent);
             }

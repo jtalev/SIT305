@@ -60,7 +60,10 @@ public class SignupActivity extends AppCompatActivity {
                     inputs.get("last name"),
                     inputs.get("username"),
                     inputs.get("email"),
-                    inputs.get("password"));
+                    inputs.get("password"),
+                    0,
+                    0,
+                    0);
 
             checkUserByUsername(user);
         }

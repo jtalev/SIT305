@@ -5,6 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.personallearningapp.models.User;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -30,4 +31,13 @@ public interface UserDao {
 
     @Delete
     public ListenableFuture<Void> delete(User user);
+
+    @Query("UPDATE user SET question_count = :questionCount WHERE uid = :uid")
+    public ListenableFuture<Void> updateQuestionCount(int uid, int questionCount);
+
+    @Query("UPDATE user SET correct_question_count = :correctQuestionCount WHERE uid = :uid")
+    public ListenableFuture<Void> updateCorrectQuestionCount(int uid, int correctQuestionCount);
+
+    @Query("UPDATE user SET incorrect_question_count = :incorrectQuestionCount WHERE uid = :uid")
+    public ListenableFuture<Void> updateIncorrectQuestionCount(int uid, int incorrectQuestionCount);
 }

@@ -31,15 +31,27 @@ public class User implements Serializable {
     @ColumnInfo(name = "password")
     private String password;
 
+    @ColumnInfo(name = "question_count")
+    private int questionCount;
+
+    @ColumnInfo(name = "correct_question_count")
+    private int correctQuestionCount;
+
+    @ColumnInfo(name = "incorrect_question_count")
+    private int incorrectQuestionCount;
+
     public User() {
     }
 
-    public User(String firstName, String lastName, String username, String email, String password) {
+    public User(String firstName, String lastName, String username, String email, String password, int questionCount, int correctQuestionCount, int incorrectQuestionCount) {
         this.username = username;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
+        this.questionCount = questionCount;
+        this.correctQuestionCount = correctQuestionCount;
+        this.incorrectQuestionCount = incorrectQuestionCount;
     }
 
     public int getUid() {
@@ -88,5 +100,29 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getQuestionCount() {
+        return questionCount;
+    }
+
+    public void setQuestionCount(int questionCount) {
+        this.questionCount = questionCount;
+    }
+
+    public int getCorrectQuestionCount() {
+        return correctQuestionCount;
+    }
+
+    public void setCorrectQuestionCount(int correctQuestionCount) {
+        this.correctQuestionCount = correctQuestionCount;
+    }
+
+    public int getIncorrectQuestionCount() {
+        return incorrectQuestionCount;
+    }
+
+    public void setIncorrectQuestionCount(int incorrectQuestionCount) {
+        this.incorrectQuestionCount = incorrectQuestionCount;
     }
 }
