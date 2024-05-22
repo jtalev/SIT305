@@ -51,4 +51,19 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void shareProfile(View view) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(
+                Intent.EXTRA_TEXT,
+                  "Check out my learning progress\n" +
+                        "Questions Answered: " + String.valueOf(user.getQuestionCount()) +
+                        "\nCorrect Answers: " + String.valueOf(user.getCorrectQuestionCount()) +
+                        "\nIncorrect Answers: " + String.valueOf(user.getIncorrectQuestionCount()));
+        sendIntent.setType("text/plain");
+
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        startActivity(shareIntent);
+    }
 }
