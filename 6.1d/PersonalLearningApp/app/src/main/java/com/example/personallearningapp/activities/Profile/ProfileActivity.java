@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.personallearningapp.R;
-import com.example.personallearningapp.activities.Login.LoginActivity;
 import com.example.personallearningapp.activities.Task.TaskActivity;
+import com.example.personallearningapp.activities.Upgrade.UpgradeActivity;
 import com.example.personallearningapp.models.User;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -65,5 +65,12 @@ public class ProfileActivity extends AppCompatActivity {
 
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         startActivity(shareIntent);
+    }
+
+    public void launchUpgrade(View view) {
+        Intent intent = new Intent(ProfileActivity.this, UpgradeActivity.class);
+        intent.putExtra("USER", user);
+        startActivity(intent);
+        finish();
     }
 }

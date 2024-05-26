@@ -17,6 +17,9 @@
         android:theme="@style/Theme.PersonalLearningApp"
         tools:targetApi="31">
         <activity
+            android:name=".activities.Upgrade.UpgradeActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.Profile.ProfileActivity"
             android:exported="false" />
         <activity
