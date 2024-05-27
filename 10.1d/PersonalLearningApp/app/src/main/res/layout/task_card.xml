@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200sp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/user_input_background"
+    android:layout_marginHorizontal="20sp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/generated_task_1"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:layout_marginHorizontal="30sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20sp"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="90sp"
+        android:text="@string/this_is_the_description_of_the_task_this_is_the_desccription_of_the_task_this_is_the_descripton_of_the_task"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginTop="50sp"
+        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="40sp"
+        android:id="@+id/start_task_button"
+        android:text="@string/start"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:background="@drawable/submit_button_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginBottom="20sp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
