@@ -57,4 +57,5 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 
     implementation("com.stripe:stripe-android:20.44.0")
+    implementation("com.github.kittinunf.fuel:fuel:2.3.1")
 }

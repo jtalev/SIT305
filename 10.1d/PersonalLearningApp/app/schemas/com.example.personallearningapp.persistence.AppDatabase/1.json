@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "c78053bad61c7eebb6fd08684091bb13",
+    "identityHash": "4fb318c9a0b7c5476d7b8305087ca8fa",
     "entities": [
       {
         "tableName": "user",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `username` TEXT, `email` TEXT, `first_name` TEXT, `last_name` TEXT, `password` TEXT, `question_count` INTEGER NOT NULL, `correct_question_count` INTEGER NOT NULL, `incorrect_question_count` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `username` TEXT, `email` TEXT, `first_name` TEXT, `last_name` TEXT, `password` TEXT, `question_count` INTEGER NOT NULL, `correct_question_count` INTEGER NOT NULL, `incorrect_question_count` INTEGER NOT NULL, `account_type` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "uid",
@@ -59,6 +59,12 @@
           {
             "fieldPath": "incorrectQuestionCount",
             "columnName": "incorrect_question_count",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accountType",
+            "columnName": "account_type",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -130,7 +136,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c78053bad61c7eebb6fd08684091bb13')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4fb318c9a0b7c5476d7b8305087ca8fa')"
     ]
   }
 }

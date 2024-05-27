@@ -40,10 +40,21 @@ public class User implements Serializable {
     @ColumnInfo(name = "incorrect_question_count")
     private int incorrectQuestionCount;
 
+    @ColumnInfo(name="account_type")
+    private int accountType = 0;
+
     public User() {
     }
 
-    public User(String firstName, String lastName, String username, String email, String password, int questionCount, int correctQuestionCount, int incorrectQuestionCount) {
+    public User(
+            String firstName,
+            String lastName,
+            String username,
+            String email,
+            String password,
+            int questionCount,
+            int correctQuestionCount,
+            int incorrectQuestionCount) {
         this.username = username;
         this.email = email;
         this.firstName = firstName;
@@ -124,5 +135,13 @@ public class User implements Serializable {
 
     public void setIncorrectQuestionCount(int incorrectQuestionCount) {
         this.incorrectQuestionCount = incorrectQuestionCount;
+    }
+
+    public int getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(int accountType) {
+        this.accountType = accountType;
     }
 }
