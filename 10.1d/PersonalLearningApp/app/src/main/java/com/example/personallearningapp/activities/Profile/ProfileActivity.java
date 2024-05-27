@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.personallearningapp.R;
+import com.example.personallearningapp.activities.History.HistoryActivity;
 import com.example.personallearningapp.activities.Task.TaskActivity;
 import com.example.personallearningapp.activities.Upgrade.UpgradeActivity;
 import com.example.personallearningapp.models.User;
@@ -69,6 +70,13 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void launchUpgrade(View view) {
         Intent intent = new Intent(ProfileActivity.this, UpgradeActivity.class);
+        intent.putExtra("USER", user);
+        startActivity(intent);
+        finish();
+    }
+
+    public void launchHistory(View view) {
+        Intent intent = new Intent(ProfileActivity.this, HistoryActivity.class);
         intent.putExtra("USER", user);
         startActivity(intent);
         finish();

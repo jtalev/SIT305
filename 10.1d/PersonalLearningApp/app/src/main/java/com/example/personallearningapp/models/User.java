@@ -2,12 +2,15 @@ package com.example.personallearningapp.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import org.checkerframework.common.aliasing.qual.Unique;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(tableName = "user", indices = {@Index(value = {"username"}, unique = true)})
 public class User implements Serializable {
@@ -42,6 +45,9 @@ public class User implements Serializable {
 
     @ColumnInfo(name="account_type")
     private int accountType = 0;
+
+    @Ignore
+    private transient QuizHistory history;
 
     public User() {
     }
@@ -143,5 +149,13 @@ public class User implements Serializable {
 
     public void setAccountType(int accountType) {
         this.accountType = accountType;
+    }
+
+    public QuizHistory getHistory() {
+        return history;
+    }
+
+    public void setHistory(QuizHistory history) {
+        this.history = history;
     }
 }
