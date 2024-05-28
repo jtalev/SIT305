@@ -15,13 +15,19 @@ import com.example.personallearningapp.R;
 import com.example.personallearningapp.activities.Profile.ProfileActivity;
 import com.example.personallearningapp.activities.Signup.SignupActivity;
 import com.example.personallearningapp.activities.Task.TaskActivity;
+import com.example.personallearningapp.models.PastQuiz;
 import com.example.personallearningapp.models.Question;
 import com.example.personallearningapp.models.Quiz;
+import com.example.personallearningapp.models.QuizHistory;
 import com.example.personallearningapp.models.User;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FinishQuizActivity extends AppCompatActivity {
     TextView q1Text;

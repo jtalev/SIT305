@@ -34,25 +34,36 @@ public class HistoryActivity extends AppCompatActivity {
         }
 
         PastQuiz pastQuiz1 = new PastQuiz(
-                "What is the capital of France?",
-                "Paris",
-                "London",
-                "Berlin",
-                "Paris",
-                "Paris"
+                "Which HTML tag is used to create a hyperlink?",
+                "<link>",
+                "<a>",
+                "<href>",
+                "<link>",
+                "<a>"
         );
+
         PastQuiz pastQuiz2 = new PastQuiz(
-                "What is 2 + 2?",
-                "3",
-                "4",
-                "5",
-                "3",
-                "4"
+                "Which CSS property is used to change the text color?",
+                "color",
+                "font-color",
+                "text-color",
+                "text-color",
+                "color"
+        );
+
+        PastQuiz pastQuiz3 = new PastQuiz(
+                "Which of the following is a JavaScript framework?",
+                "React",
+                "Laravel",
+                "Django",
+                "Django",
+                "React"
         );
 
         List<PastQuiz> pastQuizList = new ArrayList<>();
         pastQuizList.add(pastQuiz1);
         pastQuizList.add(pastQuiz2);
+        pastQuizList.add(pastQuiz3);
 
         QuizHistory history = new QuizHistory(pastQuizList);
 
